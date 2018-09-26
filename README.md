@@ -1,8 +1,8 @@
 ## HOW TO USE
 
-* save the reference sentences in *txt* format, named `ref.txt`. Difference sentences shoule be in different lines.
+* save the reference sentences in *txt* format, named `ref.txt`. Each line contains one sentence.
 
-* save the predicted sentences in *txt* format, named `tst.txt`. Difference sentences shoule be in different lines. The number of total lines must equal to that in "ref.txt".
+* save the predicted sentences in *txt* format, named `tst.txt`. Each line contains one sentence. The number of lines must equal to that in "ref.txt".
 
 * run *jieba_tokenize.py* to tokenize the sentences.
 ```
