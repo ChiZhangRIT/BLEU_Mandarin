@@ -5,6 +5,7 @@ from pycocoevalcap.meteor.meteor import Meteor
 from pycocoevalcap.tokenizer.ptbtokenizer import PTBTokenizer
 import os, cPickle
 import pdb
+import jieba
 
 class COCOScorer(object):
     def __init__(self):
@@ -79,10 +80,10 @@ def load_pkl(path):
 def score(ref, sample):
     # ref and sample are both dict
     scorers = [
-        (Bleu(4), ["Bleu_1", "Bleu_2", "Bleu_3", "Bleu_4"]),
-        (Meteor(),"METEOR"),
-        (Rouge(), "ROUGE_L"),
-        (Cider(), "CIDEr")
+        (Bleu(4), ["Bleu_1", "Bleu_2", "Bleu_3", "Bleu_4"])#,
+        # (Meteor(),"METEOR"),
+        # (Rouge(), "ROUGE_L"),
+        # (Cider(), "CIDEr")
     ]
     final_scores = {}
     for scorer, method in scorers:
@@ -111,24 +112,41 @@ def test_cocoscorer():
     #     '81922': [{u'image_id': '81922', u'caption': u'plane is flying through the sky'}],
     #     }
 
-    gts = {
-        '184321':[
-        {u'image_id': '184321', u'cap_id': 0, u'caption': u'一 辆 火 车 驶 向 了 光 旁 边 的 轨 道'},
-        {u'image_id': '184321', u'cap_id': 1, u'caption': u'一 辆 火 车 向 站 内 驶 来'}],
-        '81922': [
-        {u'image_id': '81922', u'cap_id': 0, u'caption': u'一 架 大 飞 机 从 繁 忙 的 街 道 上 飞 了 过 去'},
-        {u'image_id': '81922', u'cap_id': 1, u'caption': u'一 架 飞 机 飞 过 了 好 几 辆 车'},]
-        }
-        
-    samples = {
-        '184321': [{u'image_id': '184321', u'caption': u'一 辆 火 车 沿 路 前 方 的 轨 道 驶 去'}],
-        '81922': [{u'image_id': '81922', u'caption': u'一 架 飞 机 在 天 空 中 飞 翔'}],
-        }
+    # IDs = ['184321', '81922']
+    # scorer = COCOScorer()
+    # scorer.score(gts, samples, IDs)
+
+    ################################
+    gts = {}
+    samples = {}
+
+    with open('tst.txt','r') as f2:
+        sents = f2.readlines() # read lines of input file
+    num_sent = len(sents)
+    num_sent = 1
+
+    for i in range(num_sent):
+        words = list(jieba.cut(sents[i], cut_all=False)) # tokeize sentence using jieba
+        tok = ' '.join(words)
+        gts[str(i)] = [tok]
+
+    with open('ref.txt','r') as f2:
+        sents = f2.readlines() # read lines of input file
+    num_sent = len(sents)
+    num_sent = 1
+
+    for i in range(num_sent):
+        words = list(jieba.cut(sents[i], cut_all=False)) # tokeize sentence using jieba
+        tok = ' '.join(words)
+        samples[str(i)] = [tok]
+
+    final_scores = score(gts, samples)
+    print final_scores
+    # pdb.set_trace()
+
+    ################################
 
 
-    IDs = ['184321', '81922']
-    scorer = COCOScorer()
-    scorer.score(gts, samples, IDs)
-    
 if __name__ == '__main__':
     test_cocoscorer()
+

@@ -14,3 +14,8 @@ python jieba_tokenize.py tst.txt tst_tok.txt
 ```
 perl multi-bleu.perl ref_tok.txt < tst_tok.txt
 ```
+
+Alternatively, use COCOeval:
+```
+python caption_eval.py 
+```
