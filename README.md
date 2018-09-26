@@ -15,14 +15,13 @@ python jieba_tokenize.py ref.txt ref_tok.txt
 python jieba_tokenize.py tst.txt tst_tok.txt
 ```
 
-### Calculate BLEU score based on [multi_bleu](https://github.com/karpathy/neuraltalk/blob/master/eval/multi-bleu.perl)
+#### Calculate BLEU score based on [multi_bleu](https://github.com/karpathy/neuraltalk/blob/master/eval/multi-bleu.perl)
 
-* calculate BLEU score with the following
 ```
 perl multi-bleu.perl ref_tok.txt < tst_tok.txt
 ```
 
-### Alternatively, Calculate BLEU score based on [COCO-EVAL](https://github.com/tylin/coco-caption/tree/master/pycocoevalcap):
+#### Alternatively, Calculate BLEU score based on [COCO-EVAL](https://github.com/tylin/coco-caption/tree/master/pycocoevalcap):
 ```
 python caption_eval.py 
 ```
