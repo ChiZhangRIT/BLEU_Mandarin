@@ -88,12 +88,12 @@ def score(ref, sample):
     final_scores = {}
     for scorer, method in scorers:
         print 'computing %s score with COCO-EVAL...'%(scorer.method())
-        score, scores = scorer.compute_score(ref, sample)
-        if type(score) == list:
-            for m, s in zip(method, score):
+        _score, scores = scorer.compute_score(ref, sample)
+        if type(_score) == list:
+            for m, s in zip(method, _score):
                 final_scores[m] = s
         else:
-            final_scores[method] = score
+            final_scores[method] = _score
     return final_scores
 
 def test_cocoscorer():
@@ -116,33 +116,47 @@ def test_cocoscorer():
     # scorer = COCOScorer()
     # scorer.score(gts, samples, IDs)
 
+    gts = {
+        '184321':[
+        {u'image_id': '184321', u'cap_id': 0, u'caption': u'a train traveling down track next to lights'}]
+        }
+        
+    samples = {
+        '184321': [{u'image_id': '184321', u'caption': u'train traveling down a track in front of a road'}]
+        }
+
+    IDs = ['184321']
+    scorer = COCOScorer()
+    scorer.score(gts, samples, IDs)
+    scorer.score(samples, gts, IDs)
+
     ################################
-    gts = {}
-    samples = {}
+    # gts = {}
+    # samples = {}
 
-    with open('tst.txt','r') as f2:
-        sents = f2.readlines() # read lines of input file
-    num_sent = len(sents)
-    num_sent = 1
+    # with open('tst.txt','r') as f2:
+    #     sents = f2.readlines() # read lines of input file
+    # num_sent = len(sents)
+    # num_sent = 1
 
-    for i in range(num_sent):
-        words = list(jieba.cut(sents[i], cut_all=False)) # tokeize sentence using jieba
-        tok = ' '.join(words)
-        gts[str(i)] = [tok]
+    # for i in range(num_sent):
+    #     words = list(jieba.cut(sents[i], cut_all=False)) # tokeize sentence using jieba
+    #     tok = ' '.join(words)
+    #     gts[str(i)] = [tok]
 
-    with open('ref.txt','r') as f2:
-        sents = f2.readlines() # read lines of input file
-    num_sent = len(sents)
-    num_sent = 1
+    # with open('ref.txt','r') as f2:
+    #     sents = f2.readlines() # read lines of input file
+    # num_sent = len(sents)
+    # num_sent = 1
 
-    for i in range(num_sent):
-        words = list(jieba.cut(sents[i], cut_all=False)) # tokeize sentence using jieba
-        tok = ' '.join(words)
-        samples[str(i)] = [tok]
+    # for i in range(num_sent):
+    #     words = list(jieba.cut(sents[i], cut_all=False)) # tokeize sentence using jieba
+    #     tok = ' '.join(words)
+    #     samples[str(i)] = [tok]
 
-    final_scores = score(gts, samples)
-    print final_scores
-    # pdb.set_trace()
+    # final_scores = score(gts, samples)
+    # print final_scores
+    pdb.set_trace()
 
     ################################
 
