@@ -6,6 +6,8 @@ from pycocoevalcap.tokenizer.ptbtokenizer import PTBTokenizer
 import os, cPickle
 import pdb
 import jieba
+import sys
+
 
 class COCOScorer(object):
     def __init__(self):
@@ -116,49 +118,55 @@ def test_cocoscorer():
     # scorer = COCOScorer()
     # scorer.score(gts, samples, IDs)
 
-    gts = {
-        '184321':[
-        {u'image_id': '184321', u'cap_id': 0, u'caption': u'a train traveling down track next to lights'}]
-        }
+    ################################
+    # gts = {
+    #     '184321':[
+    #     {u'image_id': '184321', u'cap_id': 0, u'caption': u'a train traveling down track next to lights'}]
+    #     }
         
-    samples = {
-        '184321': [{u'image_id': '184321', u'caption': u'train traveling down a track in front of a road'}]
-        }
+    # samples = {
+    #     '184321': [{u'image_id': '184321', u'caption': u'train traveling down a track in front of a road'}]
+    #     }
 
-    IDs = ['184321']
-    scorer = COCOScorer()
-    scorer.score(gts, samples, IDs)
-    scorer.score(samples, gts, IDs)
+    # IDs = ['184321']
+    # scorer = COCOScorer()
+    # scorer.score(gts, samples, IDs)
+    # scorer.score(samples, gts, IDs)
 
     ################################
-    # gts = {}
-    # samples = {}
+    ref_filename = sys.argv[1]  # 0 is the script name
+    tst_filename = sys.argv[2]
+
+    gts = {}
+    samples = {}
 
     # with open('tst.txt','r') as f2:
-    #     sents = f2.readlines() # read lines of input file
-    # num_sent = len(sents)
-    # num_sent = 1
+    with open(tst_filename,'r') as f2:
+        sents = f2.readlines() # read lines of input file
+    num_sent = len(sents)
+    num_sent = 1
 
-    # for i in range(num_sent):
-    #     words = list(jieba.cut(sents[i], cut_all=False)) # tokeize sentence using jieba
-    #     tok = ' '.join(words)
-    #     gts[str(i)] = [tok]
+    for i in range(num_sent):
+        words = list(jieba.cut(sents[i], cut_all=False)) # tokeize sentence using jieba
+        tok = ' '.join(words)
+        gts[str(i)] = [tok]
 
     # with open('ref.txt','r') as f2:
-    #     sents = f2.readlines() # read lines of input file
-    # num_sent = len(sents)
-    # num_sent = 1
+    with open(ref_filename,'r') as f2:	
+        sents = f2.readlines() # read lines of input file
+    num_sent = len(sents)
+    num_sent = 1
 
-    # for i in range(num_sent):
-    #     words = list(jieba.cut(sents[i], cut_all=False)) # tokeize sentence using jieba
-    #     tok = ' '.join(words)
-    #     samples[str(i)] = [tok]
+    for i in range(num_sent):
+        words = list(jieba.cut(sents[i], cut_all=False)) # tokeize sentence using jieba
+        tok = ' '.join(words)
+        samples[str(i)] = [tok]
 
-    # final_scores = score(gts, samples)
-    # print final_scores
-    pdb.set_trace()
+    final_scores = score(gts, samples)
+    print final_scores
 
     ################################
+    # pdb.set_trace()
 
 
 if __name__ == '__main__':
