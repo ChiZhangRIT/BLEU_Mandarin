@@ -23,11 +23,11 @@ with open(output_file,'w') as f1: # to save outputs
         lengths.append(len(words)) # keep record of sentence lengths
         for word in words:
             if word == '\n':
-                f1.write(word.encode('utf-8'))
-                # f1.write(word)
+                # f1.write(word.encode('utf-8'))
+                f1.write(word)
             else:
-            	f1.write(word.encode('utf-8') + ' ') # dump tokenized sentence with tab separation
-                # f1.write(word + ' ')  
+            	# f1.write(word.encode('utf-8') + ' ') # dump tokenized sentence with tab separation
+                f1.write(word + ' ')  
             # pdb.set_trace()
 
 

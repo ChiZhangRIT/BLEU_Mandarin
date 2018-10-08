@@ -29,6 +29,6 @@ python caption_eval.py ref_tok.txt tst_tok.txt
 Note: For CSL project, after tokenization we may need to do some pre-processing to remove the video and signer IDs in front of each line:
 ```
 python preproc.py data/ground_truth_tok.txt data/predicted.txt
-perl multi-bleu.perl data/ground_truth_tok.txt < data/predicted.txt  # use multi_bleu 
-python caption_eval.py data/ground_truth_tok.txt data/predicted.txt  # use coco-eval
+perl multi-bleu.perl data/ground_truth_tok_preproc.txt < data/predicted_preproc.txt  # use multi_bleu 
+python caption_eval.py data/ground_truth_tok_preproc.txt data/predicted_preproc.txt  # use coco-eval
 ```
